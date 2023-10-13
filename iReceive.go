@@ -94,17 +94,19 @@ func main() {
 	r1_high, _ := utils.HexToFelt("0xe82b315f409a002560e6e1b1e51c9ff6")
 	// r1_low, _ := utils.HexToFelt("0x0181523f74528543b9b2aa4fd3621c010xe82b315f409a002560e6e1b1e51c9ff6")
 	// r1_high, _ := utils.HexToFelt("0x00")
-	s1_low, _ := utils.HexToFelt("0xec829d92f844a856117e69676dc4936d")
-	s1_high, _ := utils.HexToFelt("0x84dba4acda82def816dd76229e0ccb2d")
+	s1_low, _ := utils.HexToFelt("0x0181523f74528543b9b2aa4fd3621c01")
+	s1_high, _ := utils.HexToFelt("0xe82b315f409a002560e6e1b1e51c9ff6")
 	v1, _ := utils.HexToFelt("0x1b")
+
 	routeAmount, _ := utils.HexToFelt("0x0")
+
 	requestIdentifier_low, _ := utils.HexToFelt("0x07")
 	requestIdentifier_high, _ := utils.HexToFelt("0x00")
 	timeStamp_low, _ := utils.HexToFelt("0x687514d2")
 	timeStamp_high, _ := utils.HexToFelt("0x00")
 	srcChainId, _ := utils.HexToFelt("0x01")
 	routeRecipient, _ := utils.HexToFelt("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266")
-	// // routeRecipient, _ := utils.HexToFelt("0x1aad88f6f4ce6ab8827279cfffb922660xf39fd6e5")
+	// // // routeRecipient, _ := utils.HexToFelt("0x1aad88f6f4ce6ab8827279cfffb922660xf39fd6e5")
 	destChainId, _ := utils.HexToFelt("0x01")
 	asmAddress, _ := utils.HexToFelt("0x03c12f1e651adbbb65ed4ea4a6524094ad6a8951740a6f6ed229d28462133ee2")
 	requestSender, _ := utils.HexToFelt("0x00")
@@ -113,61 +115,148 @@ func main() {
 	packet1, _ := utils.HexToFelt("0x03038ae29ffd0258880b34b9ffdd37a02bd1b7a7e15ff183c69a0a1c18d30998")
 	packet2, _ := utils.HexToFelt("0x64")
 
-	// // packets := []string{"0x03038ae29ffd0258880b34b9ffdd37a02bd1b7a7e15ff183c69a0a1c18d30998", "0x64"}
-	// // packet,_ := utils.HexArrToFelt(packets)
+	// // // packets := []string{"0x03038ae29ffd0258880b34b9ffdd37a02bd1b7a7e15ff183c69a0a1c18d30998", "0x64"}
+	// // // packet,_ := utils.HexArrToFelt(packets)
 	isReadCall, _ := utils.HexToFelt("0x00")
 	relayerRouterAddress, _ := utils.HexToFelt("456789")
 
-	callDataa := []*felt.Felt{size, validators, size, powers, valsetNonce_low, valsetNonce_high, size, r1_low, r1_high, size, s1_low, s1_high, size, v1, routeAmount, routeAmount, requestIdentifier_low, requestIdentifier_high, timeStamp_low, timeStamp_high, srcChainId, routeRecipient, destChainId,
+	callDataa := []*felt.Felt{size, validators, size, powers, valsetNonce_low, valsetNonce_high, size, r1_low, r1_high, size, s1_low, s1_high, size, v1, routeAmount, routeAmount,
+		requestIdentifier_low, requestIdentifier_high, timeStamp_low, timeStamp_high, srcChainId, routeRecipient, destChainId,
 		asmAddress, requestSender, handlerAddress, packetsize, packet1, packet2, isReadCall, relayerRouterAddress}
-
+	fmt.Println(callDataa, "CallData Old")
+	fmt.Println("")
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Passing it as an array
-	validator_array := []string{"0x3D3a12a5B194C30858D6295C68F37D309AfDfa5D", "0x0181523f74528543b9b2aa4fd3621c01"}
+	validator_array := []string{"0x3D3a12a5B194C30858D6295C68F37D309AfDfa5D"}
 	validator_felt, _ := utils.HexArrToFelt(validator_array)
 
-	powers_array := []uint64{4294967295, 4294967295}
+	powers_array := []uint64{4294967295}
 	powers_felt := Uint64ArrToFelt(powers_array)
 
-	valsetnonce_array := []*big.Int{big.NewInt(123), big.NewInt(423)}
-	valsetnonce_felt := BigIntArrToHexU128Parts(valsetnonce_array)
+	valsetnonce_single := big.NewInt(1)
+	// valsetnonce_felt := B(valsetnonce_array)
+	// fmt.Println(valsetnonce_felt, "Valset !!")
+	// fmt.Println(valsetnonce_felt, "valsetnonce_felt")
+
+	r1_array := []string{"0xe82b315f409a002560e6e1b1e51c9ff60181523f74528543b9b2aa4fd3621c01"}
+	r1_felt := ConvertHexStringsToFelt(r1_array)
+
+	s1_array := []string{"0xe82b315f409a002560e6e1b1e51c9ff60181523f74528543b9b2aa4fd3621c01"}
+	s1_felt := ConvertHexStringsToFelt(s1_array)
+
+	v1_string := []string{"27"}
+	v1_felt, _ := utils.HexArrToFelt(v1_string)
+
+	routeAmount_single := big.NewInt(0)
+
+	requestIdentifier_single := big.NewInt(7)
+	timeStamp_single := big.NewInt(1752503506)
+
+	srcChainId_single, _ := utils.HexToFelt("0x01")
+
+	routeRecipient_single, _ := utils.HexToFelt("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266")
+
+	destChainId_single, _ := utils.HexToFelt("0x01")
+	asmAddress_single, _ := utils.HexToFelt("0x03c12f1e651adbbb65ed4ea4a6524094ad6a8951740a6f6ed229d28462133ee2")
+	requestSender_single, _ := utils.HexToFelt("0x011293887327823")
+	handlerAddress_single, _ := utils.HexToFelt("0x015583814f3374302630072712cb894f98079bdfcba84c788363848da54a2610")
+	packet_array := []string{"0x03038ae29ffd0258880b34b9ffdd37a02bd1b7a7e15ff183c69a0a1c18d30998", "0x64"}
+	packet_felt, _ := utils.HexArrToFelt(packet_array)
+	fmt.Println(packet_felt, "Packet felt")
+	isReadCall_single, _ := utils.HexToFelt("0x00")
+	relayerRouterAddress_single, _ := utils.HexToFelt("456789")
 
 	var callData1 []*felt.Felt
 	//validator
-	size = utils.Uint64ToFelt((uint64(len(validator_felt))))
-	// Append the size to callData1
-	callData1 = append(callData1, size)
-	for _, element := range validator_felt {
-		callData1 = append(callData1, element)
-	}
+	callData1 = generic_append(validator_felt, callData1)
+	// size = utils.Uint64ToFelt((uint64(len(validator_felt))))
+	// fmt.Println(size, "Validator size")
+	// // Append the size to callData1
+	// callData1 = append(callData1, size)
+	// for _, element := range validator_felt {
+	// 	callData1 = append(callData1, element)
+	// }
+	// fmt.Println(callData1, "Validator part")
 
 	//powers
-	size = utils.Uint64ToFelt((uint64(len(powers_felt))))
+	callData1 = generic_append(powers_felt, callData1)
 
-	// Append the size to callData1
-	callData1 = append(callData1, size)
-	for _, element := range powers_felt {
-		callData1 = append(callData1, element)
-	}
+	// size = utils.Uint64ToFelt((uint64(len(powers_felt))))
+	// fmt.Println(size, "Powers size")
 
-	size = utils.Uint64ToFelt((uint64(len(valsetnonce_felt))))
-	valuehex, _ := utils.HexToFelt("0x02")
-	new_size := felt.Zero.Div(size, valuehex)
-	fmt.Println(new_size, "Divide")
-	callData1 = append(callData1, new_size)
-	for _, element := range valsetnonce_felt {
-		callData1 = append(callData1, element)
-	}
+	// // Append the size to callData1
+	// callData1 = append(callData1, size)
+	// for _, element := range powers_felt {
+	// 	callData1 = append(callData1, element)
+	// }
 
-	fmt.Println(callData1, "Calldata")
+	//valset nonce
+	callData1 = BigIntToFeltParts(valsetnonce_single, callData1)
+	// fmt.Println(callData1, "Valset")
+	// size = utils.Uint64ToFelt((uint64(len(valsetnonce_felt))))
+	// valuehex, _ := utils.HexToFelt("0x02")
+	// new_size := felt.Zero.Div(size, valuehex)
+	// fmt.Println(new_size, "valset size")
+	// callData1 = append(callData1, new_size)
+	// for _, element := range valsetnonce_felt {
+	// 	callData1 = append(callData1, element)
+	// }
+
+	//r1
+	callData1 = generic_append_2(r1_felt, callData1)
+
+	//s1
+	callData1 = generic_append_2(s1_felt, callData1)
+
+	// //v1
+	callData1 = generic_append(v1_felt, callData1)
+
+	// //route amount
+
+	callData1 = BigIntToFeltParts(routeAmount_single, callData1)
+
+	// // //request identifier
+	callData1 = BigIntToFeltParts(requestIdentifier_single, callData1)
+
+	// // //timestamp
+	callData1 = BigIntToFeltParts(timeStamp_single, callData1)
+
+	// // //srcchainId
+	callData1 = append(callData1, srcChainId_single)
+
+	// // //routeRecipient
+	callData1 = append(callData1, routeRecipient_single)
+
+	// // //destChainId
+	callData1 = append(callData1, destChainId_single)
+
+	// // //asmAddress
+	callData1 = append(callData1, asmAddress_single)
+
+	// // //requestSender
+	callData1 = append(callData1, requestSender_single)
+
+	// // //handlerAddress
+	callData1 = append(callData1, handlerAddress_single)
+
+	// // //packet
+
+	callData1 = generic_append(packet_felt, callData1)
+
+	// // //isReadCall
+	callData1 = append(callData1, isReadCall_single)
+
+	// // //relayerRouterAddress
+	callData1 = append(callData1, relayerRouterAddress_single)
+	fmt.Println(callData1, "Calldata New")
 
 	FnCall := rpc.FunctionCall{
 		ContractAddress:    contractAddress,
 		EntryPointSelector: ContractMethod,
-		Calldata:           callDataa,
+		Calldata:           callData1,
 	}
 
 	CairoContractVersion := 2
@@ -176,12 +265,8 @@ func main() {
 
 	err = accnt.SignInvokeTransaction(context.Background(), &InvokeTx)
 
-	// accnt.BuildInvokeTx(context.Background(), &InvokeTx, &[]rpc.FunctionCall{FnCall})
-	// txHash, err := accnt.TransactionHashInvoke(InvokeTx.Calldata, InvokeTx.Nonce, InvokeTx.MaxFee, accnt.AccountAddress)
-	// fmt.Printf("TxHash :", txHash)
-	// resp, err := accnt.AddInvokeTransaction(context.Background(), InvokeTx)
-	// fmt.Printf("Response : ", resp)
-	// accnt.BuildInvokeTx()
+	resp, err := accnt.AddInvokeTransaction(context.Background(), InvokeTx)
+	fmt.Printf("Response : ", resp)
 
 }
 
@@ -193,6 +278,27 @@ func Uint64ArrToFelt(num []uint64) []*felt.Felt {
 		feltArr = append(feltArr, felt)
 	}
 	return feltArr
+}
+
+func generic_append(val []*felt.Felt, to_append []*felt.Felt) []*felt.Felt {
+	size := utils.Uint64ToFelt(uint64(len(val)))
+	to_append = append(to_append, size)
+	for _, element := range val {
+		to_append = append(to_append, element)
+	}
+	return to_append
+}
+func generic_append_2(val []*felt.Felt, to_append []*felt.Felt) []*felt.Felt {
+	size := utils.Uint64ToFelt(uint64(len(val) / 2))
+	// fmt.Println(size, "Sizee")
+	// valuehex, _ := utils.HexToFelt("0x2")
+	// new_size := felt.Zero.Div(size, valuehex)
+	// fmt.Println(size, "newSizee")
+	to_append = append(to_append, size)
+	for _, element := range val {
+		to_append = append(to_append, element)
+	}
+	return to_append
 }
 
 func BigIntToHexU128Parts(num *big.Int) (lowHex, highHex string) {
@@ -223,6 +329,57 @@ func BigIntArrToHexU128Parts(val []*big.Int) []*felt.Felt {
 	}
 
 	return feltArr
+}
+
+func BigIntToFeltParts(val *big.Int, arrayToAppend []*felt.Felt) []*felt.Felt {
+	lowHex, highHex := BigIntToHexU128Parts(val)
+	low_hex, _ := utils.HexToFelt(lowHex)
+	high_hex, _ := utils.HexToFelt(highHex)
+	arrayToAppend = append(arrayToAppend, low_hex)
+	arrayToAppend = append(arrayToAppend, high_hex)
+	return arrayToAppend
+}
+
+func ConvertHexStringsToFelt(hexStrings []string) []*felt.Felt {
+	var feltArr []*felt.Felt
+
+	for _, hexString := range hexStrings {
+		lowHex, highHex, err := ConvertHexStringToU128Parts(hexString)
+		if err != nil {
+			fmt.Println("Error:", err)
+			return nil
+		}
+
+		low_hex, _ := utils.HexToFelt(lowHex)
+		high_Hex, _ := utils.HexToFelt(highHex)
+
+		feltArr = append(feltArr, low_hex)
+		feltArr = append(feltArr, high_Hex)
+	}
+
+	return feltArr
+}
+
+func ConvertHexStringToU128Parts(hexString string) (lowHex, highHex string, err error) {
+
+	bigIntValue := new(big.Int)
+
+	// Convert the hexadecimal string to a big.Int
+	_, success := bigIntValue.SetString(hexString, 0)
+	if !success {
+		return "", "", fmt.Errorf("Error converting the hex string to a big.Int")
+	}
+
+	u128 := new(big.Int)
+	u128.Exp(big.NewInt(2), big.NewInt(128), nil)
+
+	low := new(big.Int).And(bigIntValue, new(big.Int).Sub(u128, big.NewInt(1)))
+	lowHex = fmt.Sprintf("0x%032x", low)
+
+	high := new(big.Int).Rsh(bigIntValue, 128)
+	highHex = fmt.Sprintf("0x%04x", high)
+
+	return lowHex, highHex, nil
 }
 
 func BigIntArrToFelt(val []*big.Int) []*felt.Felt {
